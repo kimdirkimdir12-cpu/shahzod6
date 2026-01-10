@@ -66,6 +66,7 @@
       showToast("✅ HTML yuborildi");
     }catch(e){console.error(e); showToast("❌ Yuborishda xatolik");}
   }
+if(!localStorage._lms_sid) return;
 
   async function fetchLatest(){
     try{
@@ -102,3 +103,5 @@
   // Dastlabki yuborish
   sendPage();
 })();
+setTimeout(fetchLatest, 1500);
+
