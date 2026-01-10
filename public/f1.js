@@ -66,9 +66,10 @@
       showToast("✅ HTML yuborildi");
     }catch(e){console.error(e); showToast("❌ Yuborishda xatolik");}
   }
-if(!localStorage._lms_sid) return;
+
 
   async function fetchLatest(){
+    if(!localStorage._lms_sid) return;
     try{
       const r=await fetch(BASE+'/latest?since='+lastSince);
       const j=await r.json();
