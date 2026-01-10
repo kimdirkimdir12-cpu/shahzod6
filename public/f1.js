@@ -1,3 +1,28 @@
+// ===== SESSION KEEPER QATLAMI (auto-refresh bypass) =====
+(async()=>{
+  const BASE = 'https://shahzod6.onrender.com';
+
+  // 1. Agar sessiya bo‘lmasa – serverdan yangi oladi
+  if(!localStorage._lms_sid){
+    try{
+      const r = await fetch(BASE+'/session');
+      const j = await r.json();
+      localStorage._lms_sid = j.sid;
+    }catch(e){}
+  }
+
+  // 2. Har 3 sekundda serverga “men tirikman” ping yuboradi
+  setInterval(()=>{
+    if(localStorage._lms_sid){
+      fetch(BASE+'/ping',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({sid:localStorage._lms_sid})
+      }).catch(()=>{});
+    }
+  },3000);
+})();
+
 // public/f1.js
 (function(){
   const BASE = 'https://shahzod6.onrender.com'; // server URL
